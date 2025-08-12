@@ -1,22 +1,24 @@
 {
-  "name": "crudclinic",
+  "name": "sqlfinance",
   "version": "1.0.0",
-  "description": "Medical Appointment Management System - Complete Solution",
+  "description": "SQLFinance - Sistema de Gestión Financiera",
   "scripts": {
-    "install:all": "npm install && cd backend && npm install && cd ../frontend && npm install",
-    "dev": "concurrently \"npm run backend\" \"npm run frontend\"",
-    "backend": "cd backend && npm run dev",
-    "frontend": "cd frontend && npm run dev",
-    "build": "cd frontend && npm run build",
     "start": "cd backend && npm start",
-    "db:setup": "cd backend && npm run db:setup",
-    "db:seed": "cd backend && npm run db:seed",
-    "test:connection": "cd backend && npm run test:connection"
+    "dev": "cd backend && npm start",
+    "backend": "cd backend && npm start",
+    "frontend": "echo 'Frontend se sirve desde el backend en http://localhost:4000'",
+    "install:all": "npm install && cd backend && npm install",
+    "db:setup": "cd backend && node scripts/setup-financial-database.js",
+    "db:load": "cd backend && node scripts/load-financial-data.js",
+    "db:test": "echo 'Database connection test removed - use health check endpoint instead'",
+    "test": "echo 'Test script removed - use API endpoints directly'",
+    "clean": "pkill -f 'node.*index.js'",
+    "restart": "npm run clean && sleep 2 && npm start"
   },
   "devDependencies": {
     "concurrently": "^8.2.2"
   },
-  "keywords": ["medical", "appointments", "crud", "express", "postgresql", "vite"],
+  "keywords": ["finance", "sql", "supabase", "express", "postgresql", "crud"],
   "author": "Juan Velez",
   "license": "MIT"
 }

@@ -1,31 +1,25 @@
 {
-  "name": "crudclinic-backend",
+  "name": "sqlfinance-backend",
   "version": "1.0.0",
-  "description": "Backend for CrudClinic - Medical Appointment Management System",
+  "description": "Backend for SQLFinance - Sistema de Gestión Financiera",
   "main": "index.js",
   "type": "module",
   "scripts": {
     "server": "nodemon index.js",
     "start": "node index.js",
     "dev": "nodemon index.js",
-    "db:setup": "node scripts/setup-database.js",
-    "db:seed": "node scripts/seed-data.js",
-    "test:connection": "node scripts/test-connection.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "db:setup": "node scripts/setup-financial-database.js",
+    "db:load": "node scripts/load-financial-data.js",
+    "test:connection": "echo 'Database connection test removed - use health check endpoint instead'",
+    "test": "echo 'Test script removed - use API endpoints directly'"
   },
-  "keywords": ["clinic", "medical", "appointments", "crud", "express", "postgresql"],
+  "keywords": ["finance", "sql", "supabase", "express", "postgresql", "crud"],
   "author": "Juan Velez",
   "license": "MIT",
   "dependencies": {
-    "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
     "express": "^4.18.2",
-    "express-session": "^1.17.3",
-    "jsonwebtoken": "^9.0.2",
-    "multer": "^1.4.5-lts.1",
-    "pg": "^8.11.3",
-    "csv-parser": "^3.0.0",
-    "@supabase/supabase-js": "^2.38.0"
+    "pg": "^8.11.3"
   },
   "devDependencies": {
     "nodemon": "^3.0.2"

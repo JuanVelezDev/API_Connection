@@ -1,6 +1,5 @@
 import express from 'express';
 import cors from 'cors';
-import session from 'express-session';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
@@ -8,14 +7,13 @@ import { fileURLToPath } from 'url';
 import { testConnection } from './config/supabase.js';
 import { config } from './config/config.js';
 
-// Import routes
-import authRoutes from './routes/auth.js';
-import pacientesRoutes from './routes/pacientes.js';
-import medicosRoutes from './routes/medicos.js';
-import citasRoutes from './routes/citas.js';
-import especialidadesRoutes from './routes/especialidades.js';
-import metodosPagoRoutes from './routes/metodos-pago.js';
-import uploadRoutes from './routes/upload.js';
+// Import Financial routes
+import clientesRoutes from './routes/clientes.js';
+import invoicesRoutes from './routes/invoices.js';
+import transactionsRoutes from './routes/transactions.js';
+import platformRoutes from './routes/platform.js';
+import dashboardRoutes from './routes/dashboard.js';
+import queriesRoutes from './routes/queries.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -29,46 +27,33 @@ app.use(express.urlencoded({ extended: true }));
 
 // CORS configuration
 app.use(cors({
-    origin: config.server.corsOrigin,
+    origin: '*',
     credentials: true
 }));
 
-// Session configuration
-app.use(session({
-    secret: config.server.sessionSecret,
-    resave: false,
-    saveUninitialized: false,
-    cookie: {
-        secure: false, // Set to true in production with HTTPS
-        maxAge: 24 * 60 * 60 * 1000 // 24 hours
-    }
-}));
+// Serve static files from frontend directory
+app.use('/frontend', express.static(path.join(__dirname, '../frontend')));
 
-// Serve static files
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
-
-// API Routes
-app.use('/api/auth', authRoutes);
-app.use('/api/pacientes', pacientesRoutes);
-app.use('/api/medicos', medicosRoutes);
-app.use('/api/citas', citasRoutes);
-app.use('/api/especialidades', especialidadesRoutes);
-app.use('/api/metodos-pago', metodosPagoRoutes);
-app.use('/api/upload', uploadRoutes);
+// Financial API Routes
+app.use('/api/clientes', clientesRoutes);
+app.use('/api/invoices', invoicesRoutes);
+app.use('/api/transactions', transactionsRoutes);
+app.use('/api/platform', platformRoutes);
+app.use('/api/dashboard', dashboardRoutes);
+app.use('/api/queries', queriesRoutes);
 
 // Health check endpoint
 app.get('/api/health', (req, res) => {
     res.json({
         status: 'OK',
-        message: 'CrudClinic API funcionando correctamente',
-        timestamp: new Date().toISOString(),
-        environment: config.environment
+        message: 'SQLFinance API funcionando correctamente',
+        timestamp: new Date().toISOString()
     });
 });
 
-// Serve the main HTML file for all other routes (SPA)
+// Serve the financial HTML file for all other routes (SPA)
 app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '../frontend/index.html'));
+    res.sendFile(path.join(__dirname, '../frontend/financial.html'));
 });
 
 // Error handling middleware
@@ -80,22 +65,14 @@ app.use((err, req, res, next) => {
     });
 });
 
-// 404 handler
-app.use((req, res) => {
-    res.status(404).json({
-        error: 'Ruta no encontrada',
-        message: 'La ruta solicitada no existe'
-    });
-});
-
 // Start server
 app.listen(PORT, async () => {
-    console.log('🏥 CrudClinic API corriendo en http://localhost:' + PORT);
-    console.log('📊 Health check: http://localhost:' + PORT + '/api/health');
-    console.log('🔐 Modo: development');
+    console.log(`SQLFinance corriendo en http://localhost:${PORT}`);
     
-    // Test Supabase connection
-    await testConnection();
+    try {
+        await testConnection();
+        console.log('Base de datos conectada');
+    } catch (error) {
+        console.error('Error en base de datos:', error.message);
+    }
 });
-
-export default app;
