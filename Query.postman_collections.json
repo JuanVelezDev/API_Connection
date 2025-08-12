@@ -1,0 +1,35 @@
+{
+	"info": {
+		"_postman_id": "c607ecf7-0167-48b4-9fd8-a79e7e8d9e93",
+		"name": "Query",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "46350249",
+		"_collection_link": "https://juanvelez-1563384.postman.co/workspace/API_Connection~70438bed-97d4-413a-8b98-caa21dfb9164/collection/46350249-c607ecf7-0167-48b4-9fd8-a79e7e8d9e93?action=share&source=collection_link&creator=46350249"
+	},
+	"item": [
+		{
+			"name": "Total Paid by Each Client",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "Pending Invoices with Client Information",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "Transactions by Platform",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		}
+	]
+}
